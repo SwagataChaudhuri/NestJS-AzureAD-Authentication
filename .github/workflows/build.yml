@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/*
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  workflow_dispatch:  
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 -> Code Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Step 2 -> Setup Node JS
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: Step 3 -> Cache Node JS Packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+      - name: Step 4 -> Install packages
+        run: npm install --registry=https://registry.npmjs.org
+      - name: Step 5 -> Run Tests & Generate Coverqge Report
+        run: npm run test:cov
+      - name: Step 6 -> Upload Coverage Report
+        run: |
+          bash <(curl -s https://codecov.io/bash)
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
