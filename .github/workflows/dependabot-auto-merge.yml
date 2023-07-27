@@ -1,0 +1,25 @@
+name: Auto Merge Dependabot PR
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      repository-projects: write
+      pull-requests: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Step 1 -> Code Checkout
+        uses: actions/checkout@v3
+      - name: Step 2 -> Approve & Merge the PR if created by Dependabot
+        if: github.event.pull_request.user.login  == 'dependabot[bot]'
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}     
+        run: |
+          gh pr review $PR_NUMBER --approve
+          gh pr merge $PR_NUMBER -d -r    
