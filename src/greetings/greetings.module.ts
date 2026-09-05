@@ -7,9 +7,9 @@ import { PassportModule } from '@nestjs/passport';
   imports: [
     PassportModule.register({
       defaultStrategy: 'AzureAD',
-    })
+    }),
   ],
   controllers: [GreetingsController],
-  providers: [GreetingsService]
+  providers: [GreetingsService],
 })
-export class GreetingsModule { }
+export class GreetingsModule {}

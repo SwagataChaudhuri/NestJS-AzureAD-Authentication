@@ -12,7 +12,7 @@ export class AzureADStrategy extends PassportStrategy(Strategy, 'AzureAD') {
       audience: configService.get('AZURE_AD_AUDIENCE'),
       issuer: `https://sts.windows.net/${configService.get('AZURE_AD_TENANTID')}/`,
       algorithms: ['RS256'],
-      ignoreExpiration: true,
+      ignoreExpiration: false,
       secretOrKeyProvider: jwksRsa.passportJwtSecret({
         cache: true,
         rateLimit: true,

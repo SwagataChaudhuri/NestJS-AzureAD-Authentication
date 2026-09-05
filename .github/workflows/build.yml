@@ -19,27 +19,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Step 1 -> Code Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Step 2 -> Setup Node JS
-        uses: actions/setup-node@v3
+      - name: Step 2 -> Setup pnpm
+        uses: pnpm/action-setup@v6
+      - name: Step 3 -> Setup Node JS
+        uses: actions/setup-node@v7
         with:
-          node-version: "18"
-      - name: Step 3 -> Cache Node JS Packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
+          node-version: "24"
+          cache: "pnpm"
       - name: Step 4 -> Install packages
-        run: npm install --registry=https://registry.npmjs.org
-      - name: Step 5 -> Run Tests & Generate Coverqge Report
-        run: npm run test:cov
+        run: pnpm install --frozen-lockfile
+      - name: Step 5 -> Run Tests & Generate Coverage Report
+        run: pnpm run test:cov
       - name: Step 6 -> Upload Coverage Report
-        run: |
-          bash <(curl -s https://codecov.io/bash)
-        env:
-          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

@@ -8,12 +8,12 @@ describe('HealthController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [HealthController],
-      imports: [TerminusModule]
+      imports: [TerminusModule],
     }).compile();
 
     controller = module.get<HealthController>(HealthController);
     spyservice = module.get<HealthCheckService>(HealthCheckService);
-    spyservice.check = jest.fn().mockResolvedValueOnce({ "status": "ok" });
+    spyservice.check = jest.fn().mockResolvedValueOnce({ status: 'ok' });
   });
 
   it('HealthController - should be defined', () => {
@@ -26,6 +26,6 @@ describe('HealthController', () => {
 
   it('HealthController - check() should return health check result', async () => {
     const response = await controller.check();
-    expect(response.status).toEqual("ok");
+    expect(response.status).toEqual('ok');
   });
 });

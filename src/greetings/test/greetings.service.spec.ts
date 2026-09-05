@@ -2,17 +2,17 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { GreetingsService } from '../greetings.service';
 import { PassportModule } from '@nestjs/passport';
 
-const response = { "message": "Welcome User !! Greetings from NestJS !!" };
+const response = { message: 'Welcome User !! Greetings from NestJS !!' };
 
 describe('GreetingsService', () => {
   let service: GreetingsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports:[
+      imports: [
         PassportModule.register({
           defaultStrategy: 'AzureAD',
-        })
+        }),
       ],
       providers: [GreetingsService],
     }).compile();
@@ -28,13 +28,9 @@ describe('GreetingsService', () => {
     expect(service.getGreetings).toBeDefined();
   });
 
-  it('GreetingsService - getGreetings() should be defined', () => {
-    expect(service.getGreetings).toBeDefined();
-  });
-
   it('GreetingsService - getGreetings() should return greetings message', async () => {
-  const result = await service.getGreetings();
-  expect(result).toEqual(response);
+    const result = await service.getGreetings();
+    expect(result).toEqual(response);
   });
 
   it('GreetingsService - getGreetingsPersonalized() should be defined', () => {

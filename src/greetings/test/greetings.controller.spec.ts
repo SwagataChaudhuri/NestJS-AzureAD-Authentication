@@ -3,7 +3,7 @@ import { GreetingsController } from '../greetings.controller';
 import { GreetingsService } from '../greetings.service';
 import { PassportModule } from '@nestjs/passport';
 
-const response = { "message": "Welcome User !! Greetings from NestJS !!" };
+const response = { message: 'Welcome User !! Greetings from NestJS !!' };
 
 describe('GreetingsController', () => {
   let controller: GreetingsController;
@@ -11,14 +11,13 @@ describe('GreetingsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports:[
+      imports: [
         PassportModule.register({
           defaultStrategy: 'AzureAD',
-        })
+        }),
       ],
       controllers: [GreetingsController],
-      providers: [GreetingsService]
-
+      providers: [GreetingsService],
     }).compile();
 
     controller = module.get<GreetingsController>(GreetingsController);

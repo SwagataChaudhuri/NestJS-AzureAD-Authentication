@@ -13,15 +13,17 @@ async function bootstrap() {
   app.disable('x-powered-by');
 
   const config = new DocumentBuilder()
-  .setTitle('Greetings Service')
-  .setDescription('Service to greet users post bearer token based authentication using azure active directory')
-  .setVersion('1.0.0')
-  .setContact('Swagata Chaudhuri', 'https://github.com/swagatachaudhuri', '')
-  .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
-  .build();
+    .setTitle('Greetings Service')
+    .setDescription(
+      'Service to greet users post bearer token based authentication using azure active directory',
+    )
+    .setVersion('1.0.0')
+    .setContact('Swagata Chaudhuri', 'https://github.com/swagatachaudhuri', '')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
+    .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api", app, document, {
+  SwaggerModule.setup('api', app, document, {
     swaggerOptions: { defaultModelsExpandDepth: -1 },
   });
 
