@@ -17,3 +17,5 @@ minimumReleaseAgeExclude:
   - '@swc/core-win32-ia32-msvc@1.16.2'
   - '@swc/core-win32-x64-msvc@1.16.2'
   - '@swc/core@1.16.2'
+overrides:
+  qs: '>=6.16.1'
